@@ -2,7 +2,7 @@ package in.reqres;
 
 import data.AuthorizationUser;
 import data.User;
-import io.restassured.*;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
+
 public class APITests {
 
     @BeforeEach
@@ -69,7 +70,7 @@ public class APITests {
 
     @Test
     @DisplayName("Удаление пользоваталя")
-    public void deliteUser() {
+    public void deleteUser() {
         given()
                 .when()
                 .delete("/users/2")

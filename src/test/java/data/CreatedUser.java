@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User{
+public class CreatedUser {
     String name;
     String job;
+    String id;
+    String createdAt;
 }

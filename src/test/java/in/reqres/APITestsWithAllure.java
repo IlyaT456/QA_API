@@ -1,5 +1,8 @@
 package in.reqres;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import org.junit.jupiter.api.Tag;
 import spec.LoginSpec;
 import data.AuthorizationUser;
 import data.CreatedUser;
@@ -14,22 +17,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 
+@Feature("Проверка пользователей")
+@Owner("Илья")
 public class APITestsWithAllure {
     @Test
     @DisplayName("Проверяем id пользователей на 2 странице")
+    @Tag("Api")
     public void listUser() {
-        given()
-                .spec(LoginSpec.loginRequestSpec)
-                .when()
-                .get("/users?page=2")
-                .then()
-                .statusCode(200)
-                .body("data.id", hasItems(7, 8, 9, 10, 11, 12));
+        step("Отправляем get запрос на пользователей на 2 странице", () ->
+                LoginSpec.loginRequestSpec
+                        .when()
+                        .get("/users?page=2")
+                        .then()
+                        .statusCode(200)
+                        .body("data.id", hasItems(7, 8, 9, 10, 11, 12)));
 
     }
 
     @Test
     @DisplayName("Создаем нового пользователя и проверяем данные")
+    @Tag("Api")
     public void greatUser() {
         User user1 = new User("Krot", "QA");
         CreatedUser createdUser =
@@ -54,19 +61,22 @@ public class APITestsWithAllure {
 
     @Test
     @DisplayName("Запрашиваем пользователя с id №9 и проверяем его first_name")
+    @Tag("Api")
     public void userRequest() {
-        given()
-                .spec(LoginSpec.loginRequestSpec)
-                .when()
-                .get("/users/9")
-                .then()
-                .statusCode(200)
-                .spec(LoginSpec.loginResponseSpec)
-                .body("data.id", is(9), "data.first_name", is("Tobias"));
+        step("Отправляем get запрос на пользователя с id №9", () ->
+                given()
+                        .spec(LoginSpec.loginRequestSpec)
+                        .when()
+                        .get("/users/9")
+                        .then()
+                        .statusCode(200)
+                        .spec(LoginSpec.loginResponseSpec)
+                        .body("data.id", is(9), "data.first_name", is("Tobias")));
     }
 
     @Test
     @DisplayName("Регистрируем нового пользователя")
+    @Tag("Api")
     public void registrationUser() {
 
         AuthorizationUser authorizationUser = new AuthorizationUser("eve.holt@reqres.in", "pistol");
@@ -90,13 +100,15 @@ public class APITestsWithAllure {
 
     @Test
     @DisplayName("Удаление пользователя")
+    @Tag("Api")
     public void deleteUser() {
-        given()
-                .spec(LoginSpec.loginRequestSpec)
-                .when()
-                .delete("/users/2")
-                .then()
-                .statusCode(204)
-                .spec(LoginSpec.loginResponseSpec);
+        step("Отправляем delete запрос на удаление пользователя", () ->
+                given()
+                        .spec(LoginSpec.loginRequestSpec)
+                        .when()
+                        .delete("/users/2")
+                        .then()
+                        .statusCode(204)
+                        .spec(LoginSpec.loginResponseSpec));
     }
 }

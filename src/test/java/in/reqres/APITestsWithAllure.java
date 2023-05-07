@@ -1,6 +1,6 @@
 package in.reqres;
 
-import Spec.LoginSpec;
+import spec.LoginSpec;
 import data.AuthorizationUser;
 import data.CreatedUser;
 import data.RegistrationUser;
@@ -66,7 +66,7 @@ public class APITestsWithAllure {
     }
 
     @Test
-    @DisplayName("Регистрием нового пользователя")
+    @DisplayName("Регистрируем нового пользователя")
     public void registrationUser() {
 
         AuthorizationUser authorizationUser = new AuthorizationUser("eve.holt@reqres.in", "pistol");
@@ -89,7 +89,7 @@ public class APITestsWithAllure {
     }
 
     @Test
-    @DisplayName("Удаление пользоваталя")
+    @DisplayName("Удаление пользователя")
     public void deleteUser() {
         given()
                 .spec(LoginSpec.loginRequestSpec)
